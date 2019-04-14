@@ -1,3 +1,3 @@
 # TriviaGame
 Trivia Game
-https://github.com/tklarrabee/TriviaGame
+https://tklarrabee.github.io/TriviaGame/
