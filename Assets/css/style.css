@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Anton|Libre+Barcode+39|Lora');
+
+.jumbotron {
+    /* background-image: url("https://upload.wikimedia.org/wikipedia/commons/5/5f/New_York_City_skyline_banner.jpg"); */
+    background-size: cover;
+    font-family: 'anton', sans-serif; color: rgb(205, 205, 206);
+}
+.clear {
+display: inline-block;}
+
+body {
+    background-image: url(../images/dark-honeycomb.png);
+    background-size: auto;
+}

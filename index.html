@@ -1,20 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="icon" type="image/ico"
+        href="http://www.iconarchive.com/download/i75988/martz90/circle-addon1/new-york-times.ico"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
     <title>Take My Quiz</title>
-    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js" integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"
+        integrity="sha256-ZaXnYkHGqIhqTbJ6MB4l9Frs/r7U4jlx7ir8PJYBqbI=" crossorigin="anonymous"></script>
     <script src="Assets/javascript/game.js"></script>
-    
+
 </head>
+
 <body>
     <div id="container">
-        <div id="countdown"></div>
-        <div id="maths"></div>
-        <div id="input"></div>
+
+        <div id="game">
+            <div id="startScreen" class="jumbotron">
+                <h1 style="text-align: center" class="display-3">Do Math!!</h1>
+                <p id="Instructions">Do math</p>
+                <button id="start">Start</button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card" hidden=true id="mathArea">
+                        <div id="countdown"></div>
+                        <div id="maths"></div>
+                        <div id="input"></div>
+                    </div>
+                </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                                <h4 class="card-header">High Score:</h4>
+                                <div id="highScore">
+                                    <h5>0</h5>
+                                </div>
+                        </div>
+
+                    </div>
+            </div>
+        </div>
     </div>
-    
+
 </body>
+
 </html>

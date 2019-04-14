@@ -1,16 +1,10 @@
-/* Player must answer a question within the alotted time
-Win condition, reset game
-object with questions in it
-Correct answer counter
-Wrong Answer counter*/
-
-
 $(document).ready(function () {
 
     //--------------------------Variables--------------------------------------//
-    var clockRunning = false;
+
     var correctAnswers = 0;
-    var answer;
+    var highScore = 0;
+    // var answer;
     var time = levelUp();
     function levelUp() {
         if (correctAnswers < 5) {
@@ -20,108 +14,143 @@ $(document).ready(function () {
             return 6;
         }
         else if (correctAnswers < 15) {
-            return 4;
+            return 6;
         }
         else {
-            return 3;
+            return 5;
         }
     }
-    console.log(levelUp());
 
     var intervalId;
     var userSelection;
 
-    // Math problems generated with 2 random numbers
-    // Math problems get harder as the level goes up, every 5 or something
-    // Operator switches randomly between + and - 
-    // Time limit counts down on the page
-    // Page is reloaded for every correct answer the level will spit out math problems until you lose
-
-
-
-
-// Starts the game
+    // Starts the game
     function startGame() {
-        if (!clockRunning) {
-            intervalId = setInterval(countDown, 1000);
-            clockRunning = true;
-            let ans = mathProb();
-            $("#maths").append(ans);
-            console.log(ans);
-        }
+        intervalId = setInterval(countDown, 1000);
+        mathProb();
     }
 
     function stopGame() {
         clearInterval(intervalId);
-        clockRunning = false;
         alert("You lost. Score: " + correctAnswers);
+        if(correctAnswers > highScore){
+            $("#highScore").empty();
+            highScore = correctAnswers;
+            $("#highScore").append(highScore);
+        }
+        correctAnswers = 0;
     }
 
     function reset() {
         clearInterval(intervalId);
-        let ans = mathProb();
-        intervalId = setInterval(countDown, 1000);
         $("#maths").empty();
-        
-        $("#maths").append(ans);
-        
-        
+        mathProb();
+        time = levelUp();
+        intervalId = setInterval(countDown, 1000);
     }
 
     function countDown() {
-
         time--;
         $("#countdown").text(time);
         if (time === 0) {
             stopGame();
             return;
         }
-
-    }
-
-
-    if (userSelection === answer) {
-        correctAnswers++;
-        reset();
     }
 
     function mathProb() {
         $("#maths").empty();
-        var numOne = Math.floor(Math.random() * 15) + 4;
-        var numTwo = Math.floor(Math.random() * 15) + 4;
-        answer = numOne + numTwo;
-        inputDisplay(answer);
+        var numOne = Math.floor(Math.random() * 65) + 3;
+        var numTwo = Math.floor(Math.random() * 67) + 3;
+        // + / - *
+        var randomOperator = Math.floor(Math.random() * 2);
+        var answer = mathtastic(randomOperator, numOne, numTwo);
+        inputDisplay(answer, numOne, numTwo, randomOperator);
         $(".answer").on("click", function () {
-            userSelection = $(this).attr("data-choice");
-            console.log(userSelection);
+            userSelection = parseInt($(this).attr("data-choice"));
+            if (userSelection === answer) {
+                correctAnswers++;
+                reset();
+            } else {
+                stopGame();
+            };
         });
-        return numOne + " + " + numTwo;
+        $("#numBox").keyup(function (event) {
+            if (event.which === 13) {
+                userSelection = parseInt($("#numBox").val());
+                correctAnswers++;
+                reset();
+            }
+        });
+    };
 
+    function mathtastic(op, nOne, nTwo) {
+        var mathyMath;
+        if (op === 0) {
+            if (nOne >= nTwo) {
+                mathyMath = nOne - nTwo;
+                console.log("Answer: " + mathyMath);
+                console.log("nOne: " + nOne + " nTwo: " + nTwo);
+                return mathyMath;
+            }
+            else {
+                mathyMath = nTwo - nOne;
+                return mathyMath;
+            }
+        } else if (op === 1) {
+            mathyMath = nOne + nTwo;
+            // console.log(mathyMath);
+            return mathyMath;
+        }
     }
 
-    function inputDisplay(a) {
+    function inputDisplay(sol, nOne, nTwo, opp) {
         $("#input").empty();
+        $("#maths").empty();
+        var firstNum;
+        var secondNum;
+        if (nOne >= nTwo) {
+            firstNum = nOne;
+            secondNum = nTwo;
+        } else {
+            firstNum = nTwo;
+            secondNum = nOne;
+        }
+        var operator;
+        if (opp === 0) {
+            operator = " - ";
+        } else {
+            operator = " + ";
+        }
+        $("#maths").append(firstNum + operator + secondNum);
         if (correctAnswers < 10) {
-            var range = Math.floor(Math.random() * 5) + 1 + a;
-            console.log("RANGE " + range)
+            var range = Math.floor(Math.random() * 5) + 1 + sol, nOne, nTwo;
+            // console.log("RANGE " + range)
             for (let i = 5; i >= 0; i--) {
-                range--;
-                let button = $("<button>");
-                button.attr("data-choice", range);
-                button.text(range);
-                button.addClass("answer");
-                $("#input").append(button);
-                console.log(range);
+                if (range === 0) {
+                    range += 10;
+                } else {
+                    range--;
+                    let button = $("<button>");
+                    button.attr("data-choice", range);
+                    button.text(range);
+                    button.addClass("answer");
+                    $("#input").append(button);
+                }
             }
         }
         else {
-            numberEnter();
+            let form = $("<input>");
+            form.attr("type", "text");
+            form.attr("id", "numBox")
+            $("#input").append(form);
+            form.focus();
         }
     }
-    startGame();
-    console.log(" = " + answer);
-    // inputDisplay(answer);
-
+    $("#start").click(function(){
+        $("#startScreen").hide();
+        $("#mathArea").attr("hidden", false);
+        startGame();
+    });
+    
 });
-
-
