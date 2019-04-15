@@ -51,7 +51,8 @@ $(document).ready(function () {
 
     function countDown() {
         time--;
-        $("#countdown").text(time);
+        // $("#countdown").text(time);
+        $("#countdown").html("<h1 class='display-4'>"+time+"</h1>");
         if (time === 0) {
             stopGame();
             return;
@@ -133,8 +134,9 @@ $(document).ready(function () {
                     range--;
                     let button = $("<button>");
                     button.attr("data-choice", range);
+                    button.attr("type", "button");
                     button.text(range);
-                    button.addClass("answer");
+                    button.addClass("answer btn btn-warning");
                     $("#input").append(button);
                 }
             }
